@@ -1,7 +1,11 @@
-const Home = () => {
+import fetchImage from "@/components/api call";
+
+const Home = async () => {
+  const apod = await fetchImage();
+
   return (
-    <div>
-      <h1>Home Page</h1>
+    <div className="flex items-center justify-center min-h-screen">
+      <img src={apod.url} alt={apod.title} />
     </div>
   );
 };

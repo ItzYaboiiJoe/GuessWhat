@@ -3,5 +3,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <div className="bg-[#EAF4F1]">{children}</div>;
+  return (
+    <div>
+      <div className="bg-[#EAF4F1]">{children}</div>
+    </div>
+  );
 }

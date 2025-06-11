@@ -2,21 +2,30 @@ import fetchImage from "@/components/api call";
 import { options } from "@/components/options";
 
 // Function to get a random option from the options array
-const getRandomOption = () =>
-  options[Math.floor(Math.random() * options.length)];
+const getRandomOptions = (count: number) => {
+  return options.sort(() => Math.random() - 0.5).slice(0, count);
+};
 
+// Main Home component
 const Home = async () => {
   // Fetch the Astronomy Picture of the Day (APOD) data
   const apod = await fetchImage();
 
+  //Grab 3 random incorrect answers from the options
+  const incorrectAnswers = getRandomOptions(3);
+
+  //Shuffle function to randomize the order of options
+  const shuffle = (array: string[]) => {
+    const result = [...array];
+    for (let i = result.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [result[i], result[j]] = [result[j], result[i]];
+    }
+    return result;
+  };
+
   // Will create a randomized list of options with the correct answer and 3 incorrect answers
-  const optionsList = [
-    apod.title, // Correct answer
-    getRandomOption(), // Random incorrect answers
-    getRandomOption(), // Random incorrect answers
-    getRandomOption(), // Random incorrect answers
-  ];
-  optionsList.sort(() => Math.random() - 0.5);
+  const optionsList = shuffle([...incorrectAnswers, apod.title]);
 
   // UI
   return (

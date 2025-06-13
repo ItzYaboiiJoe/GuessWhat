@@ -1,3 +1,5 @@
+import { supabase } from "@/lib/supabaseClient";
+
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
 const fetchImage = async () => {
@@ -8,7 +10,25 @@ const fetchImage = async () => {
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }
-  return res.json();
+  const data = await res.json();
+
+  const { title, explanation, url } = data;
+
+  const { error } = await supabase.from("ApodContent").insert([
+    {
+      Title: title,
+      Description: explanation,
+      ImageURL: url,
+    },
+  ]);
+
+  if (error) {
+    console.error("Error inserting data into Supabase:", error);
+  } else {
+    console.log("Data inserted successfully into Supabase");
+  }
+
+  return data;
 };
 
 fetchImage().then(console.log).catch(console.error);

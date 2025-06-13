@@ -67,7 +67,7 @@ const Home = async () => {
             className="w-full h-64 object-cover rounded-md border border-gray-300 mb-2"
           />
           <p className="text-left text-sm ml-1 text-gray-700">
-            Dates: {data.created_at}
+            Date: {data.created_at}
           </p>
         </div>
 

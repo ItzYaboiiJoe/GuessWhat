@@ -41,13 +41,18 @@ const Home = async () => {
           <span className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-pink-500"></span>
         </h1>
 
-        <img
-          src={apod.url}
-          alt={apod.title}
-          className="w-full h-64 object-cover rounded-md border border-gray-300"
-        />
+        <div className="w-full">
+          <img
+            src={apod.url}
+            alt={apod.title}
+            className="w-full h-64 object-cover rounded-md border border-gray-300 mb-2"
+          />
+          <p className="text-left text-sm ml-1 text-gray-700">
+            Date: {apod.date}
+          </p>
+        </div>
 
-        <RadioGroup className="w-full space-y-3 mt-6">
+        <RadioGroup className="w-full space-y-3">
           {optionsList.map((option, idx) => (
             <div
               key={idx}

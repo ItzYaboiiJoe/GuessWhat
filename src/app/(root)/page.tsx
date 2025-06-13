@@ -1,4 +1,4 @@
-import fetchImage from "@/components/api call";
+import { supabase } from "@/lib/supabaseClient";
 import { options } from "@/components/options";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -9,10 +9,29 @@ const getRandomOptions = (count: number) => {
   return options.sort(() => Math.random() - 0.5).slice(0, count);
 };
 
+// Function to get today's date in YYYY-MM-DD format
+const getTodayDate = () => new Date().toISOString().split("T")[0];
+
 // Main Home component
 const Home = async () => {
-  // Fetch the Astronomy Picture of the Day (APOD) data
-  const apod = await fetchImage();
+  // Calling todays date function to get the current date
+  const today = getTodayDate();
+
+  // Fetch data from the ApodContent table in Supabase
+  const { data, error } = await supabase
+    .from("ApodContent")
+    .select("*")
+    .eq("created_at", today)
+    .limit(1)
+    .single();
+
+  if (error || !data) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-red-500">Error!!</p>
+      </div>
+    );
+  }
 
   //Grab 3 random incorrect answers from the options
   const incorrectAnswers = getRandomOptions(3);
@@ -28,7 +47,7 @@ const Home = async () => {
   };
 
   // Will create a randomized list of options with the correct answer and 3 incorrect answers
-  const optionsList = shuffle([...incorrectAnswers, apod.title]);
+  const optionsList = shuffle([...incorrectAnswers, data.Title]);
 
   // UI
   return (
@@ -43,12 +62,12 @@ const Home = async () => {
 
         <div className="w-full">
           <img
-            src={apod.url}
-            alt={apod.title}
+            src={data.ImageURL}
+            alt={data.Title}
             className="w-full h-64 object-cover rounded-md border border-gray-300 mb-2"
           />
           <p className="text-left text-sm ml-1 text-gray-700">
-            Dates: {apod.date}
+            Dates: {data.created_at}
           </p>
         </div>
 

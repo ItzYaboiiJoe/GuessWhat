@@ -2,7 +2,12 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ["apod.nasa.gov"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "apod.nasa.gov",
+      },
+    ],
   },
 };
 

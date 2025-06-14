@@ -60,7 +60,7 @@ const Home = async () => {
             height={256}
             className="w-full h-64 object-cover rounded-md border border-gray-300 mb-2"
           />
-          <p className="text-left text-sm ml-1 text-gray-700">
+          <p className="text-left text-sm ml-2 text-gray-500">
             Date: {content.created_at}
           </p>
         </div>
@@ -70,56 +70,56 @@ const Home = async () => {
           <RadioGroup className="w-full space-y-3" defaultValue="">
             <Label
               htmlFor="option-1"
-              className="flex items-center space-x-3 border border-gray-300 rounded-md px-4 py-2 hover:border-purple-500 hover:bg-purple-100 transition-all cursor-pointer w-full"
+              className="flex justify-center items-center border border-gray-300 rounded-md px-4 py-2 hover:border-purple-500 hover:bg-purple-100 transition-all cursor-pointer w-full"
             >
               <RadioGroupItem
                 value={answers.FirstAnswer}
                 id="option-1"
                 className="peer hidden"
               />
-              <span className="text-sm font-medium text-gray-700 peer-checked:text-purple-600">
+              <span className="w-full text-center text-sm font-medium text-gray-700 peer-checked:text-purple-600">
                 {answers.FirstAnswer}
               </span>
             </Label>
 
             <Label
               htmlFor="option-2"
-              className="flex items-center space-x-3 border border-gray-300 rounded-md px-4 py-2 hover:border-purple-500 hover:bg-purple-100 transition-all cursor-pointer w-full"
+              className="flex justify-center items-center border border-gray-300 rounded-md px-4 py-2 hover:border-purple-500 hover:bg-purple-100 transition-all cursor-pointer w-full"
             >
               <RadioGroupItem
                 value={answers.SecondAnswer}
                 id="option-2"
                 className="peer hidden"
               />
-              <span className="text-sm font-medium text-gray-700 peer-checked:text-purple-600">
+              <span className="w-full text-center text-sm font-medium text-gray-700 peer-checked:text-purple-600">
                 {answers.SecondAnswer}
               </span>
             </Label>
 
             <Label
               htmlFor="option-3"
-              className="flex items-center space-x-3 border border-gray-300 rounded-md px-4 py-2 hover:border-purple-500 hover:bg-purple-100 transition-all cursor-pointer w-full"
+              className="flex justify-center items-center border border-gray-300 rounded-md px-4 py-2 hover:border-purple-500 hover:bg-purple-100 transition-all cursor-pointer w-full"
             >
               <RadioGroupItem
                 value={answers.ThirdAnswer}
                 id="option-3"
                 className="peer hidden"
               />
-              <span className="text-sm font-medium text-gray-700 peer-checked:text-purple-600">
+              <span className="w-full text-center text-sm font-medium text-gray-700 peer-checked:text-purple-600">
                 {answers.ThirdAnswer}
               </span>
             </Label>
 
             <Label
               htmlFor="option-4"
-              className="flex items-center space-x-3 border border-gray-300 rounded-md px-4 py-2 hover:border-purple-500 hover:bg-purple-100 transition-all cursor-pointer w-full"
+              className="flex justify-center items-center border border-gray-300 rounded-md px-4 py-2 hover:border-purple-500 hover:bg-purple-100 transition-all cursor-pointer w-full"
             >
               <RadioGroupItem
                 value={answers.FourthAnswer}
                 id="option-4"
                 className="peer hidden"
               />
-              <span className="text-sm font-medium text-gray-700 peer-checked:text-purple-600">
+              <span className="w-full text-center text-sm font-medium text-gray-700 peer-checked:text-purple-600">
                 {answers.FourthAnswer}
               </span>
             </Label>

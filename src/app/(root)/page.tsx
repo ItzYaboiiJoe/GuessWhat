@@ -1,7 +1,6 @@
 import { supabase } from "@/lib/supabaseClient";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { getAnswers } from "@/components/answers/answers";
+import AnswerForm from "@/components/answers";
 import Image from "next/image";
 
 // Main Home component
@@ -14,27 +13,14 @@ const Home = async () => {
     .limit(1)
     .single();
 
-  //Fetch the answer selection from ApodContentAnswers table
-  const { data: answers, error: noAnswers } = await supabase
-    .from("ApodContentAnswers")
-    .select("*")
-    .order("id", { ascending: false })
-    .limit(1)
-    .single();
+  //fetching answers
+  const answers = await getAnswers();
 
-  // Error handling for content and answers data
-  if (noContent || !content) {
+  // Error handling for content data
+  if (noContent || !content || !answers) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <p className="text-red-500">Error, could not retrieve todays Apod</p>
-      </div>
-    );
-  }
-
-  if (noAnswers || !answers) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p className="text-red-500">Error, could not retrieve Answers</p>
       </div>
     );
   }
@@ -58,6 +44,7 @@ const Home = async () => {
             alt={content.Title}
             width={512}
             height={256}
+            priority
             className="w-full h-64 object-cover rounded-md border border-gray-300 mb-2"
           />
           <p className="text-left text-sm ml-2 text-gray-500">
@@ -66,67 +53,7 @@ const Home = async () => {
         </div>
 
         {/* Answers Section */}
-        <RadioGroup className="w-full space-y-3" defaultValue="">
-          <Label
-            htmlFor="option-1"
-            className="flex justify-center items-center border border-gray-300 rounded-md px-4 py-2 hover:border-purple-500 hover:bg-purple-100 transition-all cursor-pointer w-full"
-          >
-            <RadioGroupItem
-              value={answers.FirstAnswer}
-              id="option-1"
-              className="peer hidden"
-            />
-            <span className="w-full text-center text-sm font-medium text-gray-700 peer-checked:text-purple-600">
-              {answers.FirstAnswer}
-            </span>
-          </Label>
-
-          <Label
-            htmlFor="option-2"
-            className="flex justify-center items-center border border-gray-300 rounded-md px-4 py-2 hover:border-purple-500 hover:bg-purple-100 transition-all cursor-pointer w-full"
-          >
-            <RadioGroupItem
-              value={answers.SecondAnswer}
-              id="option-2"
-              className="peer hidden"
-            />
-            <span className="w-full text-center text-sm font-medium text-gray-700 peer-checked:text-purple-600">
-              {answers.SecondAnswer}
-            </span>
-          </Label>
-
-          <Label
-            htmlFor="option-3"
-            className="flex justify-center items-center border border-gray-300 rounded-md px-4 py-2 hover:border-purple-500 hover:bg-purple-100 transition-all cursor-pointer w-full"
-          >
-            <RadioGroupItem
-              value={answers.ThirdAnswer}
-              id="option-3"
-              className="peer hidden"
-            />
-            <span className="w-full text-center text-sm font-medium text-gray-700 peer-checked:text-purple-600">
-              {answers.ThirdAnswer}
-            </span>
-          </Label>
-
-          <Label
-            htmlFor="option-4"
-            className="flex justify-center items-center border border-gray-300 rounded-md px-4 py-2 hover:border-purple-500 hover:bg-purple-100 transition-all cursor-pointer w-full"
-          >
-            <RadioGroupItem
-              value={answers.FourthAnswer}
-              id="option-4"
-              className="peer hidden"
-            />
-            <span className="w-full text-center text-sm font-medium text-gray-700 peer-checked:text-purple-600">
-              {answers.FourthAnswer}
-            </span>
-          </Label>
-        </RadioGroup>
-
-        <Button className="w-full mt-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-2 rounded-md hover:opacity-90 transition-all cursor-pointer">
-          Submit
-        </Button>
+        <AnswerForm answers={answers} />
       </div>
     </div>
   );

@@ -13,10 +13,12 @@ const SubmitAnswer = ({
   open,
   onOpenChange,
   selectedAnswer,
+  answerDecision,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   selectedAnswer?: string;
+  answerDecision?: string;
 }) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -24,9 +26,9 @@ const SubmitAnswer = ({
         <DialogHeader>
           <DialogTitle>Answer Submitted</DialogTitle>
           <DialogDescription>
-            {selectedAnswer
-              ? `You selected: ${selectedAnswer}`
-              : "No answer selected."}
+            You selected: {selectedAnswer}
+            <br />
+            {answerDecision}
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="sm:justify-end">

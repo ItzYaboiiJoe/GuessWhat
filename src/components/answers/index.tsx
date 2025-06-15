@@ -24,6 +24,7 @@ const formSchema = z.object({
 export default function AnswerForm({ answers }: { answers: ApodAnswers }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<string | undefined>();
+  const [answerDecision, setAnswerDecision] = useState<string>("");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -39,6 +40,11 @@ export default function AnswerForm({ answers }: { answers: ApodAnswers }) {
   function onSubmit(values: z.infer<typeof formSchema>) {
     setSelectedAnswer(values.answer);
     setModalOpen(true);
+    if (values.answer === answers.CorrectAnswer) {
+      setAnswerDecision("Correct Answer Selected!");
+    } else {
+      setAnswerDecision("Incorrect Answer.");
+    }
   }
 
   return (
@@ -100,6 +106,7 @@ export default function AnswerForm({ answers }: { answers: ApodAnswers }) {
         open={modalOpen}
         onOpenChange={setModalOpen}
         selectedAnswer={selectedAnswer}
+        answerDecision={answerDecision}
       />
     </>
   );

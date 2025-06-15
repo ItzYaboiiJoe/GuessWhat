@@ -7,6 +7,7 @@ export type ApodAnswers = {
   SecondAnswer: string;
   ThirdAnswer: string;
   FourthAnswer: string;
+  CorrectAnswer: string;
 };
 
 export async function getAnswers(): Promise<ApodAnswers | null> {

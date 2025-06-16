@@ -66,11 +66,11 @@ const SubmitAnswer = ({
         <DialogHeader>
           <DialogTitle
             className={
-              answerDecision === "Correct Answer Selected!"
-                ? "text-green-600"
+              (answerDecision === "Correct Answer Selected!"
+                ? "text-green-600 "
                 : answerDecision === "Incorrect Answer."
-                ? "text-red-600"
-                : ""
+                ? "text-red-600 "
+                : "") + "text-center"
             }
           >
             {answerDecision === "Correct Answer Selected!"
@@ -80,9 +80,9 @@ const SubmitAnswer = ({
               : "Answer Submitted"}
           </DialogTitle>
           <DialogDescription asChild>
-            <div>
-              <p>You selected: {selectedAnswer}</p>
-              <Accordion type="single" collapsible className="mt-4">
+            <div className="flex flex-col items-center">
+              <p className="text-center">You selected: {selectedAnswer}</p>
+              <Accordion type="single" collapsible className="mt-4 w-full">
                 <AccordionItem value="item-1">
                   <AccordionTrigger>Show Details</AccordionTrigger>
                   <AccordionContent>{content.Description}</AccordionContent>

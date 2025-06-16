@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/lib/supabaseClient";
 import {
   Dialog,
   DialogClose,
@@ -8,6 +10,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const SubmitAnswer = ({
   open,
@@ -20,15 +28,67 @@ const SubmitAnswer = ({
   selectedAnswer?: string;
   answerDecision?: string;
 }) => {
+  const [content, setContent] = useState<{ Description: string } | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchContent = async () => {
+      const { data, error } = await supabase
+        .from("ApodContent")
+        .select("*")
+        .order("id", { ascending: false })
+        .limit(1)
+        .single();
+      if (error || !data) {
+        setError("Error, could not retrieve todays Apod");
+      } else {
+        setContent(data);
+      }
+    };
+    fetchContent();
+  }, []);
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-red-500">{error}</p>
+      </div>
+    );
+  }
+
+  if (!content || !open) {
+    return null;
+  }
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Answer Submitted</DialogTitle>
-          <DialogDescription>
-            You selected: {selectedAnswer}
-            <br />
-            {answerDecision}
+          <DialogTitle
+            className={
+              answerDecision === "Correct Answer Selected!"
+                ? "text-green-600"
+                : answerDecision === "Incorrect Answer."
+                ? "text-red-600"
+                : ""
+            }
+          >
+            {answerDecision === "Correct Answer Selected!"
+              ? "Correct!"
+              : answerDecision === "Incorrect Answer."
+              ? "Incorrect"
+              : "Answer Submitted"}
+          </DialogTitle>
+          <DialogDescription asChild>
+            <div>
+              <p>You selected: {selectedAnswer}</p>
+              <Accordion type="single" collapsible className="mt-4">
+                <AccordionItem value="item-1">
+                  <AccordionTrigger>Show Details</AccordionTrigger>
+                  <AccordionContent>{content.Description}</AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </div>
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="sm:justify-end">

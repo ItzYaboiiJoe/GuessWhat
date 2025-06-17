@@ -22,7 +22,13 @@ const formSchema = z.object({
   answer: z.string().nonempty("Please select an answer."),
 });
 
-export default function AnswerForm({ answers }: { answers: ApodAnswers }) {
+export default function AnswerForm({
+  answers,
+  createdAt,
+}: {
+  answers: ApodAnswers;
+  createdAt: string;
+}) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<string | undefined>();
   const [answerDecision, setAnswerDecision] = useState<string>("");
@@ -31,6 +37,8 @@ export default function AnswerForm({ answers }: { answers: ApodAnswers }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
+
+  const todayApodDate = createdAt;
 
   const options = [
     answers.FirstAnswer,
@@ -41,8 +49,8 @@ export default function AnswerForm({ answers }: { answers: ApodAnswers }) {
 
   // Check if the user already submitted
   useEffect(() => {
-    const submitted = localStorage.getItem("apod-submitted");
-    if (submitted === "true") {
+    const submitted = localStorage.getItem("createdAt");
+    if (submitted === todayApodDate) {
       setHasSubmitted(true);
     }
   }, []);
@@ -61,7 +69,7 @@ export default function AnswerForm({ answers }: { answers: ApodAnswers }) {
     await spamPrevent(values.answer);
 
     // Save submission flag in localStorage
-    localStorage.setItem("apod-submitted", "true");
+    localStorage.setItem("createdAt", todayApodDate);
     setHasSubmitted(true);
   }
 

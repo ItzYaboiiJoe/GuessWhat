@@ -53,7 +53,7 @@ const Home = async () => {
         </div>
 
         {/* Answers Section */}
-        <AnswerForm answers={answers} />
+        <AnswerForm answers={answers} createdAt={content.created_at} />
       </div>
     </div>
   );

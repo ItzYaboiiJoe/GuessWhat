@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { getAnswers } from "../answers/answers";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -14,22 +16,10 @@ import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import { ChartConfig, ChartContainer } from "@/components/ui/chart";
 import { ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 
-const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-];
-
-const totalDesktop = chartData.reduce((sum, item) => sum + item.desktop, 0);
-console.log("Total Desktop:", totalDesktop);
-
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "#2563eb",
+  answers: {
+    label: "answer",
+    color: "blue",
   },
 } satisfies ChartConfig;
 
@@ -39,6 +29,30 @@ type ChartReportProps = {
 };
 
 const ChartReport = ({ open, onOpenChange }: ChartReportProps) => {
+  const [chartData, setChartData] = useState<
+    { answer: string; total: number }[]
+  >([]);
+
+  useEffect(() => {
+    const fetchAnswers = async () => {
+      const answers = await getAnswers();
+      if (!answers) return;
+
+      const data = [
+        { answer: answers.FirstAnswer, total: 120 },
+        { answer: answers.SecondAnswer, total: 90 },
+        { answer: answers.ThirdAnswer, total: 60 },
+        { answer: answers.FourthAnswer, total: 30 },
+      ];
+
+      setChartData(data);
+    };
+
+    fetchAnswers();
+  }, []);
+
+  const totalAnswers = chartData.reduce((sum, item) => sum + item.total, 0);
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
@@ -53,10 +67,11 @@ const ChartReport = ({ open, onOpenChange }: ChartReportProps) => {
             <BarChart accessibilityLayer data={chartData}>
               <CartesianGrid vertical={false} />
               <XAxis
-                dataKey="month"
+                dataKey="answer"
                 tickLine={false}
                 tickMargin={10}
                 axisLine={false}
+                tickFormatter={(value) => value.slice(0, 3)}
               />
               <ChartTooltip
                 content={
@@ -64,14 +79,14 @@ const ChartReport = ({ open, onOpenChange }: ChartReportProps) => {
                     formatter={(value) => {
                       const num =
                         typeof value === "number" ? value : Number(value);
-                      if (isNaN(num) || totalDesktop === 0) return "0%";
-                      const percent = ((num / totalDesktop) * 100).toFixed(1);
+                      if (isNaN(num) || totalAnswers === 0) return "0%";
+                      const percent = ((num / totalAnswers) * 100).toFixed(1);
                       return `${percent}%`;
                     }}
                   />
                 }
               />
-              <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
+              <Bar dataKey="total" fill="var(--color-answers)" radius={6} />
             </BarChart>
           </ChartContainer>
         </DialogHeader>

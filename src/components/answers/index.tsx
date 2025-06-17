@@ -17,6 +17,7 @@ import {
 import { RadioGroup } from "@/components/ui/radio-group";
 import SubmitAnswer from "../modal/submit";
 import { spamPrevent } from "./spamPrevent";
+import ChartReport from "../modal/chart";
 
 const formSchema = z.object({
   answer: z.string().nonempty("Please select an answer."),
@@ -29,7 +30,8 @@ export default function AnswerForm({
   answers: ApodAnswers;
   createdAt: string;
 }) {
-  const [modalOpen, setModalOpen] = useState(false);
+  const [ResultsOpen, setResultsOpen] = useState(false);
+  const [chartOpen, setChartOpen] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<string | undefined>();
   const [answerDecision, setAnswerDecision] = useState<string>("");
   const [hasSubmitted, setHasSubmitted] = useState(false);
@@ -58,7 +60,7 @@ export default function AnswerForm({
   // Handle form submission
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setSelectedAnswer(values.answer);
-    setModalOpen(true);
+    setResultsOpen(true);
 
     if (values.answer === answers.CorrectAnswer) {
       setAnswerDecision("Correct Answer Selected!");
@@ -126,7 +128,7 @@ export default function AnswerForm({
           <Button
             type="submit"
             disabled={hasSubmitted}
-            className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-2 rounded-md transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-2 rounded-md hover:opacity-90 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Submit
           </Button>
@@ -139,12 +141,20 @@ export default function AnswerForm({
         </form>
       </Form>
 
+      <Button
+        onClick={() => setChartOpen(true)}
+        className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-2 rounded-md hover:opacity-90 transition-all cursor-pointer"
+      >
+        Results
+      </Button>
+
       <SubmitAnswer
-        open={modalOpen}
-        onOpenChange={setModalOpen}
+        open={ResultsOpen}
+        onOpenChange={setResultsOpen}
         selectedAnswer={selectedAnswer}
         answerDecision={answerDecision}
       />
+      <ChartReport open={chartOpen} onOpenChange={setChartOpen} />
     </>
   );
 }

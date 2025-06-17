@@ -53,7 +53,7 @@ export default function AnswerForm({
     if (submitted === todayApodDate) {
       setHasSubmitted(true);
     }
-  }, []);
+  }, [todayApodDate]);
 
   // Handle form submission
   async function onSubmit(values: z.infer<typeof formSchema>) {

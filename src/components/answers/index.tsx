@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -15,7 +16,7 @@ import {
 } from "@/components/ui/form";
 import { RadioGroup } from "@/components/ui/radio-group";
 import SubmitAnswer from "../modal/submit";
-import { useState } from "react";
+import { spamPrevent } from "./spamPrevent";
 
 const formSchema = z.object({
   answer: z.string().nonempty("Please select an answer."),
@@ -25,6 +26,7 @@ export default function AnswerForm({ answers }: { answers: ApodAnswers }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<string | undefined>();
   const [answerDecision, setAnswerDecision] = useState<string>("");
+  const [hasSubmitted, setHasSubmitted] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -37,14 +39,30 @@ export default function AnswerForm({ answers }: { answers: ApodAnswers }) {
     answers.FourthAnswer,
   ];
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  // Check if the user already submitted
+  useEffect(() => {
+    const submitted = localStorage.getItem("apod-submitted");
+    if (submitted === "true") {
+      setHasSubmitted(true);
+    }
+  }, []);
+
+  // Handle form submission
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     setSelectedAnswer(values.answer);
     setModalOpen(true);
+
     if (values.answer === answers.CorrectAnswer) {
       setAnswerDecision("Correct Answer Selected!");
     } else {
       setAnswerDecision("Incorrect Answer.");
     }
+
+    await spamPrevent(values.answer);
+
+    // Save submission flag in localStorage
+    localStorage.setItem("apod-submitted", "true");
+    setHasSubmitted(true);
   }
 
   return (
@@ -74,14 +92,17 @@ export default function AnswerForm({ answers }: { answers: ApodAnswers }) {
                           id={`option-${idx}`}
                           className="peer hidden"
                           checked={field.value === option}
-                          onChange={() => field.onChange(option)}
+                          onChange={() =>
+                            !hasSubmitted && field.onChange(option)
+                          }
+                          disabled={hasSubmitted}
                         />
                         <FormLabel
                           htmlFor={`option-${idx}`}
                           className="flex justify-center items-center border border-gray-300 rounded-md px-4 py-2 transition-all cursor-pointer w-full
-    hover:border-purple-500 hover:bg-purple-100
-    peer-checked:border-purple-500 peer-checked:bg-purple-100
-    text-sm font-medium text-gray-700"
+                            hover:border-purple-500 hover:bg-purple-100
+                            peer-checked:border-purple-500 peer-checked:bg-purple-100
+                            text-sm font-medium text-gray-700"
                         >
                           {option}
                         </FormLabel>
@@ -96,12 +117,20 @@ export default function AnswerForm({ answers }: { answers: ApodAnswers }) {
 
           <Button
             type="submit"
-            className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-2 rounded-md hover:opacity-90 transition-all cursor-pointer"
+            disabled={hasSubmitted}
+            className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-2 rounded-md transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Submit
           </Button>
+
+          {hasSubmitted && (
+            <p className="text-center text-sm text-gray-600 mt-2">
+              You’ve already submitted your answer for today!
+            </p>
+          )}
         </form>
       </Form>
+
       <SubmitAnswer
         open={modalOpen}
         onOpenChange={setModalOpen}

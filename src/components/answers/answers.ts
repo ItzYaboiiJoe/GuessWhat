@@ -8,6 +8,7 @@ export type ApodAnswers = {
   ThirdAnswer: string;
   FourthAnswer: string;
   CorrectAnswer: string;
+  created_at: string;
 };
 
 export async function getAnswers(): Promise<ApodAnswers | null> {

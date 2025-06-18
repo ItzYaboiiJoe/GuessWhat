@@ -125,13 +125,22 @@ export default function AnswerForm({
             )}
           />
 
-          <Button
-            type="submit"
-            disabled={hasSubmitted}
-            className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-2 rounded-md hover:opacity-90 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            Submit
-          </Button>
+          {hasSubmitted ? (
+            <Button
+              onClick={() => setChartOpen(true)}
+              className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-2 rounded-md hover:opacity-90 transition-all cursor-pointer"
+              type="button"
+            >
+              Results
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-2 rounded-md hover:opacity-90 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Submit
+            </Button>
+          )}
 
           {hasSubmitted && (
             <p className="text-center text-sm text-gray-600 mt-2">
@@ -140,13 +149,6 @@ export default function AnswerForm({
           )}
         </form>
       </Form>
-
-      <Button
-        onClick={() => setChartOpen(true)}
-        className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-2 rounded-md hover:opacity-90 transition-all cursor-pointer"
-      >
-        Results
-      </Button>
 
       <SubmitAnswer
         open={ResultsOpen}

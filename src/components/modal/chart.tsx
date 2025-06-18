@@ -1,7 +1,7 @@
 "use client";
 
+import { answerCount } from "../answers/answerCount";
 import { useEffect, useState } from "react";
-import { getAnswers } from "../answers/answers";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -34,21 +34,19 @@ const ChartReport = ({ open, onOpenChange }: ChartReportProps) => {
   >([]);
 
   useEffect(() => {
-    const fetchAnswers = async () => {
-      const answers = await getAnswers();
-      if (!answers) return;
+    const fetchData = async () => {
+      const counts = await answerCount();
+      if (!counts) return;
 
-      const data = [
-        { answer: answers.FirstAnswer, total: 120 },
-        { answer: answers.SecondAnswer, total: 90 },
-        { answer: answers.ThirdAnswer, total: 60 },
-        { answer: answers.FourthAnswer, total: 30 },
-      ];
+      const data = Object.entries(counts).map(([answer, count]) => ({
+        answer,
+        total: count ?? 0,
+      }));
 
       setChartData(data);
     };
 
-    fetchAnswers();
+    fetchData();
   }, []);
 
   const totalAnswers = chartData.reduce((sum, item) => sum + item.total, 0);

@@ -63,13 +63,22 @@ const ChartReport = ({ open, onOpenChange }: ChartReportProps) => {
           <DialogDescription></DialogDescription>
           <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
             <BarChart accessibilityLayer data={chartData}>
+              <defs>
+                <linearGradient id="barGradient" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor="#a855f7" />{" "}
+                  {/* from-purple-500 */}
+                  <stop offset="100%" stopColor="#ec4899" />
+                </linearGradient>
+              </defs>
               <CartesianGrid vertical={false} />
               <XAxis
                 dataKey="answer"
                 tickLine={false}
                 tickMargin={10}
                 axisLine={false}
-                tickFormatter={(value) => value.slice(0, 3)}
+                tickFormatter={(value) =>
+                  value.length > 12 ? value.slice(0, 12) + "…" : value
+                }
               />
               <ChartTooltip
                 content={
@@ -84,7 +93,7 @@ const ChartReport = ({ open, onOpenChange }: ChartReportProps) => {
                   />
                 }
               />
-              <Bar dataKey="total" fill="var(--color-answers)" radius={6} />
+              <Bar dataKey="total" fill="url(#barGradient)" radius={6} />
             </BarChart>
           </ChartContainer>
         </DialogHeader>

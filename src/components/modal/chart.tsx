@@ -13,6 +13,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import { ChartConfig, ChartContainer } from "@/components/ui/chart";
 import { ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
@@ -27,9 +33,10 @@ const chartConfig = {
 type ChartReportProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  description?: string | null;
 };
 
-const ChartReport = ({ open, onOpenChange }: ChartReportProps) => {
+const ChartReport = ({ open, onOpenChange, description }: ChartReportProps) => {
   const [chartData, setChartData] = useState<
     { answer: string; total: number }[]
   >([]);
@@ -80,7 +87,6 @@ const ChartReport = ({ open, onOpenChange }: ChartReportProps) => {
               Answer Poll
             </span>
           </DialogTitle>
-          <DialogDescription></DialogDescription>
           <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
             <BarChart accessibilityLayer data={chartData}>
               <defs>
@@ -116,6 +122,13 @@ const ChartReport = ({ open, onOpenChange }: ChartReportProps) => {
               <Bar dataKey="total" fill="url(#barGradient)" radius={6} />
             </BarChart>
           </ChartContainer>
+          <DialogDescription></DialogDescription>
+          <Accordion type="single" collapsible className="mt-4 w-full">
+            <AccordionItem value="item-1">
+              <AccordionTrigger>Show Details</AccordionTrigger>
+              <AccordionContent>{description}</AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </DialogHeader>
         <DialogFooter className="sm:justify-end">
           <DialogClose asChild>

@@ -35,6 +35,7 @@ export default function AnswerForm({
   const [selectedAnswer, setSelectedAnswer] = useState<string | undefined>();
   const [answerDecision, setAnswerDecision] = useState<string>("");
   const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [description, setDescription] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -155,8 +156,13 @@ export default function AnswerForm({
         onOpenChange={setResultsOpen}
         selectedAnswer={selectedAnswer}
         answerDecision={answerDecision}
+        setDescription={setDescription}
       />
-      <ChartReport open={chartOpen} onOpenChange={setChartOpen} />
+      <ChartReport
+        open={chartOpen}
+        onOpenChange={setChartOpen}
+        description={description}
+      />
     </>
   );
 }

@@ -22,11 +22,13 @@ const SubmitAnswer = ({
   onOpenChange,
   selectedAnswer,
   answerDecision,
+  setDescription,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   selectedAnswer?: string;
   answerDecision?: string;
+  setDescription: (desc: string) => void;
 }) => {
   const [content, setContent] = useState<{
     Description: string;
@@ -46,6 +48,7 @@ const SubmitAnswer = ({
         setError("Error, could not retrieve todays Apod");
       } else {
         setContent(data);
+        setDescription(data.Description);
       }
     };
     fetchContent();
@@ -90,14 +93,14 @@ const SubmitAnswer = ({
                   Correct Answer Was: {content.Title}
                 </p>
               )}
-              <Accordion type="single" collapsible className="mt-4 w-full">
-                <AccordionItem value="item-1">
-                  <AccordionTrigger>Show Details</AccordionTrigger>
-                  <AccordionContent>{content.Description}</AccordionContent>
-                </AccordionItem>
-              </Accordion>
             </div>
           </DialogDescription>
+          <Accordion type="single" collapsible className="mt-4 w-full">
+            <AccordionItem value="item-1">
+              <AccordionTrigger>Show Details</AccordionTrigger>
+              <AccordionContent>{content.Description}</AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </DialogHeader>
         <DialogFooter className="sm:justify-end">
           <DialogClose asChild>

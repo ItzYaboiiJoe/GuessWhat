@@ -132,7 +132,7 @@ export default function AnswerForm({
               className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-2 rounded-md hover:opacity-90 transition-all cursor-pointer"
               type="button"
             >
-              Results
+              View Results
             </Button>
           ) : (
             <Button

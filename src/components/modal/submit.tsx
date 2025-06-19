@@ -28,7 +28,10 @@ const SubmitAnswer = ({
   selectedAnswer?: string;
   answerDecision?: string;
 }) => {
-  const [content, setContent] = useState<{ Description: string } | null>(null);
+  const [content, setContent] = useState<{
+    Description: string;
+    Title: string;
+  } | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -82,6 +85,11 @@ const SubmitAnswer = ({
           <DialogDescription asChild>
             <div className="flex flex-col items-center">
               <p className="text-center">You selected: {selectedAnswer}</p>
+              {answerDecision !== "Correct Answer Selected!" && (
+                <p className="text-center">
+                  Correct Answer Was: {content.Title}
+                </p>
+              )}
               <Accordion type="single" collapsible className="mt-4 w-full">
                 <AccordionItem value="item-1">
                   <AccordionTrigger>Show Details</AccordionTrigger>

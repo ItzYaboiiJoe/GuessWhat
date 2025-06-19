@@ -1,5 +1,6 @@
 "use client";
 
+import { supabase } from "@/lib/supabaseClient";
 import { answerCount } from "../answers/answerCount";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -47,6 +48,25 @@ const ChartReport = ({ open, onOpenChange }: ChartReportProps) => {
     };
 
     fetchData();
+
+    const channel = supabase
+      .channel("realtime-poll")
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "ApodSpamPrevent",
+        },
+        () => {
+          fetchData();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   const totalAnswers = chartData.reduce((sum, item) => sum + item.total, 0);

@@ -1,13 +1,14 @@
+import Header from "@/components/shared";
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <div>
-      <div className="bg-gradient-to-br from-slate-50 to-purple-100 ">
-        {children}
-      </div>
+    <div className="flex h-screen flex-col">
+      <Header />
+      <div className="bg-[#F8ECE1]">{children}</div>
     </div>
   );
 }

@@ -3,8 +3,16 @@ import loader from "@/assets/loader.gif";
 
 const LoadingPage = () => {
   return (
-    <div className="flex justify-center items-center h-screen w-screen">
-      <Image src={loader} height={150} width={150} alt="Loading..." />
+    <div className="bg-[#F8ECE1] flex justify-center items-center h-screen w-screen">
+      <div className="relative w-[150px] h-[150px]">
+        <Image
+          src={loader}
+          alt="Loading..."
+          fill
+          sizes="150px"
+          style={{ objectFit: "contain" }}
+        />
+      </div>
     </div>
   );
 };

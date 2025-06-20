@@ -48,6 +48,8 @@ const ChartReport = ({
   >([]);
 
   useEffect(() => {
+    if (!open) return;
+
     const fetchData = async () => {
       const counts = await answerCount();
       if (!counts) return;
@@ -78,9 +80,10 @@ const ChartReport = ({
       .subscribe();
 
     return () => {
+      channel.unsubscribe();
       supabase.removeChannel(channel);
     };
-  }, []);
+  }, [open]);
 
   const totalAnswers = chartData.reduce((sum, item) => sum + item.total, 0);
 

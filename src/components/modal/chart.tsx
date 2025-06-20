@@ -34,9 +34,15 @@ type ChartReportProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   description?: string | null;
+  title?: string | null;
 };
 
-const ChartReport = ({ open, onOpenChange, description }: ChartReportProps) => {
+const ChartReport = ({
+  open,
+  onOpenChange,
+  description,
+  title,
+}: ChartReportProps) => {
   const [chartData, setChartData] = useState<
     { answer: string; total: number }[]
   >([]);
@@ -84,9 +90,12 @@ const ChartReport = ({ open, onOpenChange, description }: ChartReportProps) => {
         <DialogHeader>
           <DialogTitle className="text-center">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-500">
-              Answer Poll
+              Answer Results
             </span>
           </DialogTitle>
+          <DialogDescription className="text-center">
+            Correct Answer: {title}
+          </DialogDescription>
           <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
             <BarChart accessibilityLayer data={chartData}>
               <defs>
@@ -122,7 +131,6 @@ const ChartReport = ({ open, onOpenChange, description }: ChartReportProps) => {
               <Bar dataKey="total" fill="url(#barGradient)" radius={6} />
             </BarChart>
           </ChartContainer>
-          <DialogDescription></DialogDescription>
           <Accordion type="single" collapsible className="mt-4 w-full">
             <AccordionItem value="item-1">
               <AccordionTrigger>Show Details</AccordionTrigger>

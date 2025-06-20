@@ -162,6 +162,7 @@ export default function AnswerForm({
         open={chartOpen}
         onOpenChange={setChartOpen}
         description={description}
+        title={answers.CorrectAnswer}
       />
     </>
   );

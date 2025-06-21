@@ -18,6 +18,7 @@ import { RadioGroup } from "@/components/ui/radio-group";
 import SubmitAnswer from "../modal/submit";
 import { spamPrevent } from "./spamPrevent";
 import ChartReport from "../modal/chart";
+import { motion } from "motion/react";
 
 const formSchema = z.object({
   answer: z.string().nonempty("Please select an answer."),
@@ -95,7 +96,17 @@ export default function AnswerForm({
                     defaultValue={field.value}
                   >
                     {options.map((option, idx) => (
-                      <div key={idx} className="w-full">
+                      <motion.div
+                        key={idx}
+                        className="w-full"
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{
+                          delay: idx * 0.15,
+                          duration: 0.4,
+                          ease: "easeOut",
+                        }}
+                      >
                         <input
                           type="radio"
                           name="answer"
@@ -111,13 +122,13 @@ export default function AnswerForm({
                         <FormLabel
                           htmlFor={`option-${idx}`}
                           className="flex justify-center items-center border border-gray-300 rounded-md px-4 py-2 transition-all cursor-pointer w-full
-                            hover:border-purple-500 hover:bg-purple-100
-                            peer-checked:border-purple-500 peer-checked:bg-purple-100
-                            text-sm font-medium text-gray-700"
+        hover:border-purple-500 hover:bg-purple-100
+        peer-checked:border-purple-500 peer-checked:bg-purple-100
+        text-sm font-medium text-gray-700"
                         >
                           {option}
                         </FormLabel>
-                      </div>
+                      </motion.div>
                     ))}
                   </RadioGroup>
                 </FormControl>
@@ -126,27 +137,38 @@ export default function AnswerForm({
             )}
           />
 
-          {hasSubmitted ? (
-            <Button
-              onClick={() => setChartOpen(true)}
-              className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-2 rounded-md hover:opacity-90 transition-all cursor-pointer"
-              type="button"
-            >
-              View Results
-            </Button>
-          ) : (
-            <Button
-              type="submit"
-              className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-2 rounded-md hover:opacity-90 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Submit
-            </Button>
-          )}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.4, ease: "easeOut" }}
+          >
+            {hasSubmitted ? (
+              <Button
+                onClick={() => setChartOpen(true)}
+                className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-2 rounded-md hover:opacity-90 transition-all cursor-pointer"
+                type="button"
+              >
+                View Results
+              </Button>
+            ) : (
+              <Button
+                type="submit"
+                className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-2 rounded-md hover:opacity-90 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Submit
+              </Button>
+            )}
+          </motion.div>
 
           {hasSubmitted && (
-            <p className="text-center text-sm text-gray-600 mt-2">
+            <motion.p
+              className="text-center text-sm text-gray-600 mt-2"
+              initial={{ opacity: 0, y: -5 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.0, duration: 0.3 }}
+            >
               You’ve already submitted your answer for today!
-            </p>
+            </motion.p>
           )}
         </form>
       </Form>

@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../assets/globals.css";
-import { APP_NAME, APP_DESCRIPTION, SERVER_URL } from "@/lib/constants/index";
+import {
+  APP_NAME,
+  APP_DESCRIPTION,
+  SERVER_URL,
+  KeyWords,
+  Graph,
+} from "@/lib/constants/index";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -9,6 +15,21 @@ export const metadata: Metadata = {
   title: `${APP_NAME}`,
   description: `${APP_DESCRIPTION}`,
   metadataBase: new URL(SERVER_URL),
+  keywords: KeyWords,
+  openGraph: {
+    title: Graph.title,
+    description: Graph.description,
+    url: Graph.url,
+    siteName: Graph.siteName,
+  },
+  twitter: {
+    card: "summary",
+    title: Graph.title,
+    description: Graph.description,
+  },
+  alternates: {
+    canonical: SERVER_URL,
+  },
 };
 
 export default function RootLayout({

@@ -115,7 +115,7 @@ const ChartReport = ({
                 tickMargin={10}
                 axisLine={false}
                 tickFormatter={(value) =>
-                  value.length > 12 ? value.slice(0, 12) + "…" : value
+                  value.length > 12 ? value.slice(0, 7) + "…" : value
                 }
               />
               <ChartTooltip

@@ -68,7 +68,7 @@ const SubmitAnswer = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] bg-[#1a1a2e] text-white border border-purple-600 shadow-xl">
         <DialogHeader>
           <DialogTitle
             className={
@@ -106,7 +106,7 @@ const SubmitAnswer = ({
           <DialogClose asChild>
             <Button
               type="button"
-              className="bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-2 rounded-md hover:opacity-90 transition-all cursor-pointer"
+              className="bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-2 rounded-md hover:opacity-70 transition-all cursor-pointer"
             >
               Close
             </Button>

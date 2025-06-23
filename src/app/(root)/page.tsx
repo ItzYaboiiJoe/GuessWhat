@@ -28,7 +28,7 @@ const Home = async () => {
   // UI
   return (
     <div className="flex items-center justify-center min-h-screen px-4">
-      <div className="flex flex-col space-y-6 items-center p-6 bg-white shadow-xl rounded-xl w-full max-w-md">
+      <div className="flex flex-col space-y-6 items-center p-6 bg-transparent border-2 shadow-xl rounded-xl w-full max-w-md">
         {/* Title Section */}
         <h1 className="text-3xl font-bold text-gray-900 leading-tight pb-2 relative">
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-500">

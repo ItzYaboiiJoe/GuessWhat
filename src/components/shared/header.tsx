@@ -5,7 +5,7 @@ import AboutButton from "./about";
 
 const Header = () => {
   return (
-    <header className="w-full border-b bg-white">
+    <header className="w-full bg-gray-800">
       <div className="max-w-screen-xl mx-auto px-4 py-2 flex justify-between items-center">
         <div className="flex items-center">
           <Link href={"/"} className="flex items-center">
@@ -16,7 +16,7 @@ const Header = () => {
               width={48}
               priority={true}
             />
-            <div className="hidden lg:block font-bold text-2xl ml-3">
+            <div className="hidden lg:block font-bold text-2xl ml-3 text-white">
               {APP_NAME}
             </div>
           </Link>

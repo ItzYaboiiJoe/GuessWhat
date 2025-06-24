@@ -89,7 +89,7 @@ const SubmitAnswer = ({
             <div className="flex flex-col items-center">
               <p className="text-center">You selected: {selectedAnswer}</p>
               {answerDecision !== "Correct Answer Selected!" && (
-                <p className="text-center">
+                <p className="text-center text-gray-400">
                   Correct Answer Was: {content.Title}
                 </p>
               )}

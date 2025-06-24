@@ -124,7 +124,7 @@ export default function AnswerForm({
                           className="flex justify-center items-center border border-gray-300 rounded-md px-4 py-2 transition-all cursor-pointer w-full
         hover:border-purple-500 hover:bg-purple-100
         peer-checked:border-purple-500 peer-checked:bg-purple-100
-        text-sm font-medium text-gray-700"
+        text-sm font-medium text-gray-400 hover:text-gray-700"
                         >
                           {option}
                         </FormLabel>
@@ -162,7 +162,7 @@ export default function AnswerForm({
 
           {hasSubmitted && (
             <motion.p
-              className="text-center text-sm text-gray-600 mt-2"
+              className="text-center text-sm text-gray-400 mt-2"
               initial={{ opacity: 0, y: -5 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.0, duration: 0.3 }}

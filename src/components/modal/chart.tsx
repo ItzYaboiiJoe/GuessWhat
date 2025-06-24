@@ -96,7 +96,7 @@ const ChartReport = ({
               Answer Results
             </span>
           </DialogTitle>
-          <DialogDescription className="text-center">
+          <DialogDescription className="text-center text-gray-400">
             Correct Answer: {title}
           </DialogDescription>
           <ChartContainer config={chartConfig} className="min-h-[200px] w-full">

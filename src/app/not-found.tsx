@@ -17,13 +17,13 @@ const NotFoundPage = () => {
 
       {/* Content */}
       <Image
-        src={"/images/QuestionMark.svg"}
-        width={48}
-        height={48}
+        src={"/images/Galaxy.svg"}
+        width={128}
+        height={128}
         alt={`${APP_NAME} logo`}
         priority={true}
       />
-      <div className="p-6 rounded-lg shadow-md text-center backdrop-blur-sm bg-black/40">
+      <div className="p-6 mt-8 rounded-lg shadow-md text-center backdrop-blur-sm bg-black/40">
         <h1 className="text-3xl font-bold mb-4 text-white">Not Found</h1>
         <p className="text-pink-400">Could not find requested page</p>
         <Link href={"/"} passHref>

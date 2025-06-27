@@ -12,7 +12,6 @@ export const KeyWords = [
 export const Graph = {
   title: "GuessWhat - APOD Edition",
   description: "Test your space knowledge with daily NASA images.",
-  image: SERVER_URL + "/images/Galaxy.svg",
   url: SERVER_URL,
   siteName: APP_NAME,
 };

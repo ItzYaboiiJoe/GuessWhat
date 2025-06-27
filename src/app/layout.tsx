@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     siteName: Graph.siteName,
     images: [
       {
-        url: Graph.image,
+        url: "/images/Galaxy.svg",
         width: 1200,
         height: 630,
         alt: Graph.title,
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: Graph.title,
     description: Graph.description,
-    images: [Graph.image],
+    images: ["/images/Galaxy.svg"],
   },
   alternates: {
     canonical: SERVER_URL,

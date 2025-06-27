@@ -23,11 +23,20 @@ export const metadata: Metadata = {
     description: Graph.description,
     url: Graph.url,
     siteName: Graph.siteName,
+    images: [
+      {
+        url: Graph.image,
+        width: 1200,
+        height: 630,
+        alt: Graph.title,
+      },
+    ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: Graph.title,
     description: Graph.description,
+    images: [Graph.image],
   },
   alternates: {
     canonical: SERVER_URL,

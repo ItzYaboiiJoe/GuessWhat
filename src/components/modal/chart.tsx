@@ -89,7 +89,7 @@ const ChartReport = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px] bg-[#1a1a2e] text-white border border-purple-600 shadow-xl">
+      <DialogContent className="sm:max-w-[425px] max-h-[90vh] overflow-y-auto bg-[#1a1a2e] text-white border border-purple-600 shadow-xl">
         <DialogHeader>
           <DialogTitle className="text-center">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-500">

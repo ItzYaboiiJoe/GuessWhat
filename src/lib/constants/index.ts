@@ -6,11 +6,11 @@ export const KeyWords = [
   "NASA",
   "APOD",
   "daily astronomy",
-  "GuessWhat",
+  "Guess What",
   "space quiz",
 ];
 export const Graph = {
-  title: "GuessWhat - APOD Edition",
+  title: "Guess What - APOD Edition",
   description: "Test your space knowledge with daily NASA images.",
   url: SERVER_URL,
   siteName: APP_NAME,

@@ -1,5 +1,6 @@
 "use client";
 
+import { supabase } from "@/lib/supabaseClient";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -31,6 +32,7 @@ export default function AnswerForm({
   answers: ApodAnswers;
   createdAt: string;
 }) {
+  const [liveAnswers, setLiveAnswers] = useState(answers);
   const [ResultsOpen, setResultsOpen] = useState(false);
   const [chartOpen, setChartOpen] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<string | undefined>();
@@ -45,10 +47,10 @@ export default function AnswerForm({
   const todayApodDate = createdAt;
 
   const options = [
-    answers.FirstAnswer,
-    answers.SecondAnswer,
-    answers.ThirdAnswer,
-    answers.FourthAnswer,
+    liveAnswers.FirstAnswer,
+    liveAnswers.SecondAnswer,
+    liveAnswers.ThirdAnswer,
+    liveAnswers.FourthAnswer,
   ];
 
   // Check if the user already submitted
@@ -59,12 +61,39 @@ export default function AnswerForm({
     }
   }, [todayApodDate]);
 
+  // Handle Supabase real-time updates
+  useEffect(() => {
+    const channel = supabase
+      .channel("realtime:apodcontentanswers")
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "ApodContentAnswers",
+        },
+        (payload) => {
+          const newAnswer = payload.new as ApodAnswers;
+          if (
+            new Date(newAnswer.created_at) > new Date(liveAnswers.created_at)
+          ) {
+            setLiveAnswers(newAnswer);
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [liveAnswers.created_at]);
+
   // Handle form submission
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setSelectedAnswer(values.answer);
     setResultsOpen(true);
 
-    if (values.answer === answers.CorrectAnswer) {
+    if (values.answer === liveAnswers.CorrectAnswer) {
       setAnswerDecision("Correct Answer Selected!");
     } else {
       setAnswerDecision("Incorrect Answer.");
@@ -184,7 +213,7 @@ export default function AnswerForm({
         open={chartOpen}
         onOpenChange={setChartOpen}
         description={description}
-        title={answers.CorrectAnswer}
+        title={liveAnswers.CorrectAnswer}
       />
     </>
   );

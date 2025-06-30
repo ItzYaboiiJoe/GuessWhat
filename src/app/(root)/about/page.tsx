@@ -1,8 +1,17 @@
+"use client";
+
+import { motion } from "motion/react";
+
 const About = () => {
   return (
     <div className="flex items-center justify-center min-h-screen px-4 py-20">
-      Add commentMore actions
-      <div className="max-w-2xl text-center text-white">
+      {/* Remove stray text: Add commentMore actions */}
+      <motion.div
+        className="max-w-2xl text-center text-white"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
         <h1 className="text-4xl font-bold mb-4">About Guess What</h1>
         <p className="text-lg">
           Guess What is a space-themed quiz game that challenges players to
@@ -20,7 +29,7 @@ const About = () => {
             your device to improve functionality.
           </p>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

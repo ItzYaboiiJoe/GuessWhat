@@ -1,6 +1,6 @@
 import { supabase } from "@/lib/supabaseClient";
 import { getAnswers } from "@/components/answers/answers";
-import LiveContent from "@/components/shared/LiveContent";
+import LiveContent from "@/components/shared/liveContent";
 
 export default async function Home() {
   const { data: content, error } = await supabase

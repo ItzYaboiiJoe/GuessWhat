@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import Image from "next/image";
 import AnswerForm from "@/components/answers";
+import { motion } from "motion/react";
 
 type ApodContent = {
   id: number;
@@ -47,7 +48,12 @@ export default function LiveContent({ initialContent, answers }: Props) {
 
   return (
     <div className="flex items-center justify-center min-h-screen px-4">
-      <div className="flex flex-col space-y-6 items-center p-6 bg-transparent border-2 shadow-xl rounded-xl w-full max-w-md">
+      <motion.div
+        className="flex flex-col space-y-6 items-center p-6 bg-transparent border-2 shadow-xl rounded-xl w-full max-w-md"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
         <h1 className="text-3xl font-bold text-gray-900 leading-tight pb-2 relative">
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-500">
             What is this?
@@ -55,7 +61,12 @@ export default function LiveContent({ initialContent, answers }: Props) {
           <span className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-pink-500"></span>
         </h1>
 
-        <div className="w-full">
+        <motion.div
+          className="w-full"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.5, ease: "easeOut" }}
+        >
           <Image
             src={content.ImageURL}
             alt={content.Title}
@@ -67,10 +78,10 @@ export default function LiveContent({ initialContent, answers }: Props) {
           <p className="text-left text-sm ml-2 text-gray-500">
             Date: {content.created_at}
           </p>
-        </div>
+        </motion.div>
 
         <AnswerForm answers={answers} createdAt={content.created_at} />
-      </div>
+      </motion.div>
     </div>
   );
 }

@@ -39,10 +39,7 @@ export default function LiveContent({ initialContent, answers }: Props) {
           );
         }
       )
-      .subscribe((status) => {
-        console.log("🔌 Realtime status:", status);
-      });
-
+      .subscribe();
     return () => {
       supabase.removeChannel(channel);
     };

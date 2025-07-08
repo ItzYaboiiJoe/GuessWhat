@@ -1,6 +1,10 @@
+import dynamic from "next/dynamic";
 import { supabase } from "@/lib/supabaseClient";
 import { getAnswers } from "@/components/answers/answers";
-import LiveContent from "@/components/shared/liveContent";
+
+const LiveContent = dynamic(() => import("@/components/shared/liveContent"), {
+  ssr: false,
+});
 
 export default async function Home() {
   const { data: content, error } = await supabase

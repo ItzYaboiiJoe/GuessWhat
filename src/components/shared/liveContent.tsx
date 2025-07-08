@@ -34,17 +34,19 @@ export default function LiveContent({ initialContent, answers }: Props) {
         },
         (payload) => {
           const newRow = payload.new as ApodContent;
-          if (newRow.created_at > content.created_at) {
-            setContent(newRow);
-          }
+          setContent((prev) =>
+            newRow.created_at > prev.created_at ? newRow : prev
+          );
         }
       )
-      .subscribe();
+      .subscribe((status) => {
+        console.log("🔌 Realtime status:", status);
+      });
 
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [content.created_at]);
+  }, []);
 
   return (
     <div className="flex items-center justify-center min-h-screen px-4">

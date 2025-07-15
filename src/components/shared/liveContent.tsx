@@ -14,19 +14,30 @@ type ApodContent = {
   created_at: string;
 };
 
-type Props = {
-  initialContent: ApodContent;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  answers: any;
-};
+export default function LiveContent() {
+  const [content, setContent] = useState<ApodContent | null>(null);
+  const [answers, setAnswers] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
-export default function LiveContent({
-  initialContent,
-  answers: initialAnswers,
-}: Props) {
-  const [content, setContent] = useState(initialContent);
-  const [answers, setAnswers] = useState(initialAnswers);
+  // Fetch latest content and answers on mount
+  useEffect(() => {
+    async function fetchLatest() {
+      setLoading(true);
+      const { data } = await supabase
+        .from("ApodContent")
+        .select("*")
+        .order("id", { ascending: false })
+        .limit(1)
+        .single();
+      setContent(data);
+      const latestAnswers = await getAnswers();
+      setAnswers(latestAnswers);
+      setLoading(false);
+    }
+    fetchLatest();
+  }, []);
 
+  // Listen for new inserts and update content/answers
   useEffect(() => {
     const channel = supabase
       .channel("realtime:apodcontent")
@@ -40,8 +51,10 @@ export default function LiveContent({
         (payload) => {
           const newRow = payload.new as ApodContent;
           setContent((prev) =>
-            newRow.created_at > prev.created_at ? newRow : prev
+            !prev || newRow.created_at > prev.created_at ? newRow : prev
           );
+          // Fetch new answers for the new content
+          getAnswers().then(setAnswers);
         }
       )
       .subscribe();
@@ -50,13 +63,13 @@ export default function LiveContent({
     };
   }, []);
 
-  useEffect(() => {
-    async function fetchLatestAnswers() {
-      const latestAnswers = await getAnswers();
-      if (latestAnswers) setAnswers(latestAnswers);
-    }
-    fetchLatestAnswers();
-  }, [content.created_at]);
+  if (loading || !content || !answers) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen px-4">

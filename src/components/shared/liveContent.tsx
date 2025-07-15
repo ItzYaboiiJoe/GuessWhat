@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import Image from "next/image";
 import AnswerForm from "@/components/answers";
+import { getAnswers } from "@/components/answers/answers";
 import { motion } from "motion/react";
 
 type ApodContent = {
@@ -19,8 +20,12 @@ type Props = {
   answers: any;
 };
 
-export default function LiveContent({ initialContent, answers }: Props) {
+export default function LiveContent({
+  initialContent,
+  answers: initialAnswers,
+}: Props) {
   const [content, setContent] = useState(initialContent);
+  const [answers, setAnswers] = useState(initialAnswers);
 
   useEffect(() => {
     const channel = supabase
@@ -44,6 +49,14 @@ export default function LiveContent({ initialContent, answers }: Props) {
       supabase.removeChannel(channel);
     };
   }, []);
+
+  useEffect(() => {
+    async function fetchLatestAnswers() {
+      const latestAnswers = await getAnswers();
+      if (latestAnswers) setAnswers(latestAnswers);
+    }
+    fetchLatestAnswers();
+  }, [content.created_at]);
 
   return (
     <div className="flex items-center justify-center min-h-screen px-4">

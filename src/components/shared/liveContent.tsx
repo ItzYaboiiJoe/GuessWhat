@@ -23,23 +23,6 @@ export default function LiveContent({ initialContent, answers }: Props) {
   const [content, setContent] = useState(initialContent);
 
   useEffect(() => {
-    const fetchLatest = async () => {
-      const { data } = await supabase
-        .from("ApodContent")
-        .select("*")
-        .order("id", { ascending: false })
-        .limit(1)
-        .single();
-
-      if (data && data.created_at > content.created_at) {
-        setContent(data);
-      }
-    };
-
-    fetchLatest();
-  }, []);
-
-  useEffect(() => {
     const channel = supabase
       .channel("realtime:apodcontent")
       .on(
@@ -57,7 +40,6 @@ export default function LiveContent({ initialContent, answers }: Props) {
         }
       )
       .subscribe();
-
     return () => {
       supabase.removeChannel(channel);
     };

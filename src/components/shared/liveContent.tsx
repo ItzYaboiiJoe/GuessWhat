@@ -6,6 +6,7 @@ import Image from "next/image";
 import AnswerForm from "@/components/answers";
 import { getAnswers } from "@/components/answers/answers";
 import { motion } from "motion/react";
+import { ApodAnswers } from "@/components/answers/answers";
 
 type ApodContent = {
   id: number;
@@ -16,7 +17,7 @@ type ApodContent = {
 
 export default function LiveContent() {
   const [content, setContent] = useState<ApodContent | null>(null);
-  const [answers, setAnswers] = useState<any>(null);
+  const [answers, setAnswers] = useState<ApodAnswers | null>(null);
   const [loading, setLoading] = useState(true);
 
   // Fetch latest content and answers on mount

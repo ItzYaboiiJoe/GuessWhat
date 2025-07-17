@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { APP_NAME } from "@/lib/constants";
 import AboutButton from "./about";
-import ArchiveButton from "./archive";
 
 const Header = () => {
   return (
@@ -23,7 +22,6 @@ const Header = () => {
           </Link>
         </div>
         <div className="flex items-center gap-2 ml-auto">
-          <ArchiveButton />
           <AboutButton />
         </div>
       </div>

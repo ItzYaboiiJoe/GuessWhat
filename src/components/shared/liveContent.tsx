@@ -7,6 +7,8 @@ import AnswerForm from "@/components/answers";
 import { getAnswers } from "@/components/answers/answers";
 import { motion } from "motion/react";
 import { ApodAnswers } from "@/components/answers/answers";
+import { Button } from "../ui/button";
+import Link from "next/link";
 
 type ApodContent = {
   id: number;
@@ -73,7 +75,8 @@ export default function LiveContent() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen px-4">
+    <div className="flex flex-col items-center justify-center min-h-screen px-4 space-y-4">
+      {/* Card */}
       <motion.div
         className="flex flex-col space-y-6 items-center p-6 bg-transparent border-2 shadow-xl rounded-xl w-full max-w-md"
         initial={{ opacity: 0, y: -20 }}
@@ -107,6 +110,20 @@ export default function LiveContent() {
         </motion.div>
 
         <AnswerForm answers={answers} createdAt={content.created_at} />
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.3, duration: 0.6, ease: "easeOut" }}
+      >
+        {/* Display Archive Page */}
+        <Button
+          variant="link"
+          className="relative bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-500 hover:cursor-pointer after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[2px] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:origin-left after:bg-gradient-to-r after:from-purple-500 after:to-pink-500"
+        >
+          <Link href={"/archive"}>View Previous Questions</Link>
+        </Button>
       </motion.div>
     </div>
   );

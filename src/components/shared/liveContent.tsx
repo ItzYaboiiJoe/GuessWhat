@@ -66,7 +66,7 @@ export default function LiveContent() {
 
   if (loading || !content || !answers) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center min-h-screen text-white">
         <p>Loading...</p>
       </div>
     );

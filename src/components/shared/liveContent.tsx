@@ -42,8 +42,9 @@ export default function LiveContent() {
 
   // Listen for new inserts and update content/answers
   useEffect(() => {
+    const channelId = `realtime:apodcontent-${Date.now()}`;
     const channel = supabase
-      .channel("realtime:apodcontent")
+      .channel(channelId)
       .on(
         "postgres_changes",
         {
@@ -51,18 +52,21 @@ export default function LiveContent() {
           schema: "public",
           table: "ApodContent",
         },
-        (payload) => {
+        async (payload) => {
           const newRow = payload.new as ApodContent;
           setContent((prev) =>
             !prev || newRow.created_at > prev.created_at ? newRow : prev
           );
-          // Fetch new answers for the new content
-          getAnswers().then(setAnswers);
+
+          setLoading(true);
+          const latestAnswers = await getAnswers();
+          setAnswers(latestAnswers);
+          setLoading(false);
         }
       )
       .subscribe();
     return () => {
-      supabase.removeChannel(channel);
+      channel.unsubscribe();
     };
   }, []);
 

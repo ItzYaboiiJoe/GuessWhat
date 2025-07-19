@@ -63,8 +63,9 @@ export default function AnswerForm({
 
   // Handle Supabase real-time updates
   useEffect(() => {
+    const channelId = `realtime:apodcontentanswers-${Date.now()}`;
     const channel = supabase
-      .channel("realtime:apodcontentanswers")
+      .channel(channelId)
       .on(
         "postgres_changes",
         {
@@ -84,7 +85,7 @@ export default function AnswerForm({
       .subscribe();
 
     return () => {
-      supabase.removeChannel(channel);
+      channel.unsubscribe();
     };
   }, [liveAnswers.created_at]);
 

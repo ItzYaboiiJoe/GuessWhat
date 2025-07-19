@@ -137,7 +137,7 @@ const ChartReport = ({
           </ChartContainer>
           <Accordion type="single" collapsible className="mt-4 w-full">
             <AccordionItem value="item-1">
-              <AccordionTrigger>Show Details</AccordionTrigger>
+              <AccordionTrigger>Learn More About {title}</AccordionTrigger>
               <AccordionContent>{description}</AccordionContent>
             </AccordionItem>
           </Accordion>

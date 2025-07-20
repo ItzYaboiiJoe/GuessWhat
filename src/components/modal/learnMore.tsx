@@ -31,7 +31,9 @@ const LearnMore = ({
               Learn More About {title}
             </span>
           </DialogTitle>
-          <DialogDescription className="mt-5">{description}</DialogDescription>
+          <DialogDescription className="mt-5 text-white">
+            {description}
+          </DialogDescription>
         </DialogHeader>
         <DialogFooter className="sm:justify-end">
           <DialogClose asChild>

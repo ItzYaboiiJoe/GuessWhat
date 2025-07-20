@@ -134,7 +134,7 @@ export default function LiveContent() {
                 className="relative bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-500 hover:cursor-pointer after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[2px] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:origin-left after:bg-gradient-to-r after:from-purple-500 after:to-pink-500"
                 onClick={() => setShowArchive(true)}
               >
-                View Previous Questions
+                View Previous Quiz
               </Button>
             </motion.div>
           </motion.div>

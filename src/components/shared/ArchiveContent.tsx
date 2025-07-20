@@ -39,7 +39,7 @@ export default function ArchiveContent({ onBack }: Props) {
         .from("ApodContent")
         .select("*")
         .order("id", { ascending: false })
-        .limit(5);
+        .range(1, 5);
       setContent((data as ApodContent[]) || []);
       setLoading(false);
     }

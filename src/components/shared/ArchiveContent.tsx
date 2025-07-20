@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
 import { supabase } from "@/lib/supabaseClient";
-import { getAnswers } from "@/components/answers/answers";
-import { ApodAnswers } from "@/components/answers/answers";
 import { Button } from "../ui/button";
 import {
   Carousel,
@@ -28,7 +26,6 @@ type ApodContent = {
 
 export default function ArchiveContent({ onBack }: Props) {
   const [content, setContent] = useState<ApodContent[]>([]);
-  const [answers, setAnswers] = useState<ApodAnswers | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -40,8 +37,6 @@ export default function ArchiveContent({ onBack }: Props) {
         .order("id", { ascending: false })
         .limit(5);
       setContent((data as ApodContent[]) || []);
-      const latestAnswers = await getAnswers();
-      setAnswers(latestAnswers);
       setLoading(false);
     }
     fetchLatest();
@@ -80,10 +75,13 @@ export default function ArchiveContent({ onBack }: Props) {
                 <p className="text-left text-sm ml-2 text-gray-500">
                   Date: {item!.created_at}
                 </p>
+
+                <div className="flex justify-center items-center border border-gray-300 rounded-md px-4 py-2 transition-all w-full   text-sm font-medium text-gray-400 mt-4">
+                  {item.Title}
+                </div>
               </CarouselItem>
             ))}
           </CarouselContent>
-
           <CarouselPrevious />
           <CarouselNext />
         </Carousel>

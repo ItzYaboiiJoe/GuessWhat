@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { supabase } from "@/lib/supabaseClient";
 import { Button } from "../ui/button";
+import LearnMore from "../modal/learnMore";
 import {
   Carousel,
   CarouselContent,
@@ -26,7 +27,9 @@ type ApodContent = {
 
 export default function ArchiveContent({ onBack }: Props) {
   const [content, setContent] = useState<ApodContent[]>([]);
+  const [selectedItem, setSelectedItem] = useState<ApodContent | null>(null);
   const [loading, setLoading] = useState(true);
+  const [infoOpen, setInfoOpen] = useState(false);
 
   useEffect(() => {
     async function fetchLatest() {
@@ -80,6 +83,17 @@ export default function ArchiveContent({ onBack }: Props) {
                   <div className="flex justify-center items-center border border-gray-300 rounded-md px-4 py-2 transition-all w-full   text-sm font-medium text-gray-400 mt-4">
                     {item.Title}
                   </div>
+
+                  <Button
+                    onClick={() => {
+                      setSelectedItem(item);
+                      setInfoOpen(true);
+                    }}
+                    className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-2 rounded-md hover:opacity-70 transition-all cursor-pointer mt-6"
+                    type="button"
+                  >
+                    Learn More
+                  </Button>
                 </CarouselItem>
               ))}
             </CarouselContent>
@@ -96,6 +110,12 @@ export default function ArchiveContent({ onBack }: Props) {
           Back to Current Quiz
         </Button>
       </div>
+      <LearnMore
+        infoOpen={infoOpen}
+        setInfoOpen={setInfoOpen}
+        title={selectedItem?.Title || "Error Fetching Title"}
+        description={selectedItem?.Description || "Error Fetching Description"}
+      />
     </>
   );
 }

@@ -83,8 +83,8 @@ export default function ArchiveContent({ onBack }: Props) {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
+            <CarouselPrevious className="-left-18" />
+            <CarouselNext className="-right-18" />
           </Carousel>
         </div>
 

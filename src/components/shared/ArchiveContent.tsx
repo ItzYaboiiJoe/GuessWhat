@@ -60,7 +60,7 @@ export default function ArchiveContent({ onBack }: Props) {
         <div className="flex flex-col space-y-6 items-center p-6 bg-transparent border-2 shadow-xl rounded-xl w-full max-w-md text-white">
           <h1 className="text-3xl font-bold text-gray-900 leading-tight pb-2 relative">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-500">
-              Previous Quiz
+              Previous Challenges
             </span>
             <span className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-pink-500"></span>
           </h1>
@@ -132,7 +132,7 @@ export default function ArchiveContent({ onBack }: Props) {
             className="relative bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-500 hover:cursor-pointer after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[2px] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:origin-left after:bg-gradient-to-r after:from-purple-500 after:to-pink-500"
             onClick={onBack}
           >
-            Back to Current Quiz
+            Back to Current Challenge
           </Button>
         </motion.div>
       </div>

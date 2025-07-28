@@ -114,7 +114,7 @@ export default function LiveContent() {
                   width={512}
                   height={256}
                   priority
-                  className="w-full h-64 object-cover rounded-md border border-gray-300 mb-2"
+                  className="w-full h-64 object-cover rounded-md border border-gray-300 mb-2 text-white"
                 />
                 <p className="text-left text-sm ml-2 text-gray-500">
                   Date: {content!.created_at}

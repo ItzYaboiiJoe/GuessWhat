@@ -1,4 +1,3 @@
-"use client";
 import LiveContent from "@/components/shared/liveContent";
 
 export default function Home() {

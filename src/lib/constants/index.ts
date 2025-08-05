@@ -1,7 +1,7 @@
 export const APP_NAME = "Guess What";
 export const APP_DESCRIPTION =
   "A simple game app to guess what is shown in the image";
-export const SERVER_URL = "https://guess-what-space.vercel.app/";
+export const SERVER_URL = "https://www.guesswhat-apod.space";
 export const KeyWords = [
   "NASA",
   "APOD",

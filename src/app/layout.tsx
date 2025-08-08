@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     siteName: Graph.siteName,
     images: [
       {
-        url: "/images/Galaxy.svg",
+        url: "/images/Galaxy.png",
         width: 1200,
         height: 630,
         alt: Graph.title,
@@ -50,6 +50,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/icon.ico" type="image/x-icon" />
+      </head>
       <body className={`${inter.className} antialiased`}>
         {children}
         <Analytics />

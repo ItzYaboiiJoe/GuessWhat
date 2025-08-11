@@ -52,6 +52,10 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="icon" href="/icon.ico" type="image/x-icon" />
+        <meta
+          name="google-adsense-account"
+          content="ca-pub-4454909616652906"
+        ></meta>
       </head>
       <body className={`${inter.className} antialiased`}>
         {children}

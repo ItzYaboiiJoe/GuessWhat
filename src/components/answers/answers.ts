@@ -13,7 +13,7 @@ export type ApodAnswers = {
 
 export async function getAnswers(): Promise<ApodAnswers | null> {
   const { data, error } = await supabase
-    .from("ApodContentAnswers")
+    .from("Apod_ContentAnswers")
     .select("*")
     .order("id", { ascending: false })
     .limit(1)

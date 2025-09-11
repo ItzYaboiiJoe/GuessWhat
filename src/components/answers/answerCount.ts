@@ -10,7 +10,7 @@ export async function answerCount(): Promise<Record<
 
   const fetchCount = async (answer: string) => {
     const { count, error } = await supabase
-      .from("ApodSpamPrevent")
+      .from("Apod_SpamPrevent")
       .select("*", { count: "exact", head: true })
       .eq("Answer", answer)
       .eq("created_at", answers.created_at);

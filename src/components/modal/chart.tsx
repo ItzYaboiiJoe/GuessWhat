@@ -71,7 +71,7 @@ const ChartReport = ({
         {
           event: "INSERT",
           schema: "public",
-          table: "ApodSpamPrevent",
+          table: "Apod_SpamPrevent",
         },
         () => {
           fetchData();

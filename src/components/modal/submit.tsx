@@ -39,7 +39,7 @@ const SubmitAnswer = ({
   useEffect(() => {
     const fetchContent = async () => {
       const { data, error } = await supabase
-        .from("ApodContent")
+        .from("Apod_Content")
         .select("*")
         .order("id", { ascending: false })
         .limit(1)

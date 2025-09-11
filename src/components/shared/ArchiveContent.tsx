@@ -36,7 +36,7 @@ export default function ArchiveContent({ onBack }: Props) {
     async function fetchLatest() {
       setLoading(true);
       const { data } = await supabase
-        .from("ApodContent")
+        .from("Apod_Content")
         .select("*")
         .order("id", { ascending: false })
         .range(1, 5);

@@ -2,7 +2,7 @@ import { supabase } from "@/lib/supabaseClient";
 
 export async function spamPrevent(answer: string): Promise<string | null> {
   const { data: content, error } = await supabase
-    .from("ApodContent")
+    .from("Apod_Content")
     .select("*")
     .order("id", { ascending: false })
     .limit(1)
@@ -13,7 +13,7 @@ export async function spamPrevent(answer: string): Promise<string | null> {
     return null;
   }
 
-  const { error: dateError } = await supabase.from("ApodSpamPrevent").insert([
+  const { error: dateError } = await supabase.from("Apod_SpamPrevent").insert([
     {
       created_at: content.created_at,
       Answer: answer,

@@ -71,7 +71,7 @@ export default function AnswerForm({
         {
           event: "INSERT",
           schema: "public",
-          table: "ApodContentAnswers",
+          table: "Apod_ContentAnswers",
         },
         (payload) => {
           const newAnswer = payload.new as ApodAnswers;

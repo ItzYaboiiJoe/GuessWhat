@@ -27,7 +27,7 @@ export default function LiveContent() {
     async function fetchLatest() {
       setLoading(true);
       const { data } = await supabase
-        .from("ApodContent")
+        .from("Apod_Content")
         .select("*")
         .order("id", { ascending: false })
         .limit(1)
@@ -49,7 +49,7 @@ export default function LiveContent() {
         {
           event: "INSERT",
           schema: "public",
-          table: "ApodContent",
+          table: "Apod_Content",
         },
         async (payload) => {
           const newRow = payload.new as ApodContent;

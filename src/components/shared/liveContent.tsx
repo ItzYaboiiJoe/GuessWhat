@@ -22,6 +22,8 @@ export default function LiveContent() {
   const [answers, setAnswers] = useState<ApodAnswers | null>(null);
   const [loading, setLoading] = useState(true);
   const [showArchive, setShowArchive] = useState(false);
+  // This state is to control the image modal
+  const [showImageModal, setShowImageModal] = useState(false);
 
   useEffect(() => {
     async function fetchLatest() {
@@ -114,7 +116,8 @@ export default function LiveContent() {
                   width={512}
                   height={256}
                   priority
-                  className="w-full h-64 object-cover rounded-md border border-gray-300 mb-2 text-white"
+                  className="w-full h-64 object-cover rounded-md border border-gray-300 mb-2 text-white cursor-pointer"
+                  onClick={() => setShowImageModal(true)}
                 />
                 <p className="text-left text-sm ml-2 text-gray-500">
                   Date: {content!.created_at}
@@ -148,6 +151,46 @@ export default function LiveContent() {
             className="flex flex-col items-center justify-center min-h-screen px-4 space-y-4 w-full"
           >
             <ArchiveContent onBack={() => setShowArchive(false)} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* This block controls image modal animation */}
+      <AnimatePresence>
+        {showImageModal && (
+          <motion.div
+            key="image-modal"
+            className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            onClick={() => setShowImageModal(false)}
+          >
+            <motion.div
+              className="relative max-w-4xl max-h-[90vh] p-2"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Image
+                src={content!.ImageURL}
+                alt={content!.Title}
+                width={1200}
+                height={800}
+                className="w-auto h-auto max-h-[85vh] rounded-md"
+              />
+
+              {/* X button */}
+              <button
+                className="absolute top-2 right-2 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-700 hover:cursor-pointer"
+                onClick={() => setShowImageModal(false)}
+              >
+                ✕
+              </button>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

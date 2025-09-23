@@ -15,3 +15,4 @@ export const Graph = {
   url: SERVER_URL,
   siteName: APP_NAME,
 };
+export const APP_VERSION = "Version 1.1";

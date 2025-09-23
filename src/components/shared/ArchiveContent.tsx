@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { supabase } from "@/lib/supabaseClient";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import { Button } from "../ui/button";
 import LearnMore from "../modal/learnMore";
 import {
@@ -31,6 +31,9 @@ export default function ArchiveContent({ onBack }: Props) {
   const [selectedItem, setSelectedItem] = useState<ApodContent | null>(null);
   const [loading, setLoading] = useState(true);
   const [infoOpen, setInfoOpen] = useState(false);
+  // These state controls image modal
+  const [showImageModal, setShowImageModal] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchLatest() {
@@ -80,7 +83,11 @@ export default function ArchiveContent({ onBack }: Props) {
                       width={512}
                       height={256}
                       priority
-                      className="w-full h-64 object-cover rounded-md border border-gray-300 mb-2"
+                      className="w-full h-64 object-cover rounded-md border border-gray-300 mb-2 cursor-pointer"
+                      onClick={() => {
+                        setSelectedImage(item.ImageURL);
+                        setShowImageModal(true);
+                      }}
                     />
                     <p className="text-left text-sm ml-2 text-gray-500">
                       Date: {item.created_at}
@@ -142,6 +149,46 @@ export default function ArchiveContent({ onBack }: Props) {
         title={selectedItem?.Title || "Error Fetching Title"}
         description={selectedItem?.Description || "Error Fetching Description"}
       />
+
+      {/* This block controls the image modals */}
+      <AnimatePresence>
+        {showImageModal && selectedImage && (
+          <motion.div
+            key="archive-image-modal"
+            className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            onClick={() => setShowImageModal(false)}
+          >
+            <motion.div
+              className="relative max-w-4xl max-h-[90vh] p-2"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Image
+                src={selectedImage}
+                alt="Selected Archive Image"
+                width={1200}
+                height={800}
+                className="w-auto h-auto max-h-[85vh] rounded-md"
+              />
+
+              {/* X button */}
+              <button
+                className="absolute top-2 right-2 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-700 hover:cursor-pointer"
+                onClick={() => setShowImageModal(false)}
+              >
+                ✕
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

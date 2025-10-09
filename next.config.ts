@@ -11,6 +11,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "inteng-storage.s3.amazonaws.com",
       },
+      {
+        protocol: "https",
+        hostname: "cdn.esahubble.org",
+      },
     ],
   },
 };

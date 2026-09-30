@@ -10,7 +10,6 @@ import {
   APP_VERSION,
 } from "@/lib/constants/index";
 import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -66,7 +65,6 @@ export default function RootLayout({
       <body className={`${inter.className} antialiased`}>
         {children}
         <Analytics />
-        <SpeedInsights />
         <div className="fixed bottom-2 right-2 text-xs text-gray-700 bg-white/70 px-2 py-1 rounded-md shadow-md">
           {APP_VERSION}
         </div>
